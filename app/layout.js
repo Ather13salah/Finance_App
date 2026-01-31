@@ -20,17 +20,17 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} transition-color duration-500 flex flex-col min-h-screen antialiased bg-white dark:bg-black text-black dark:text-white`}
-      >
-        <ThemeProvider defaultTheme="system" attribute="class">
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} transition-color duration-500 flex flex-col min-h-screen antialiased bg-white dark:bg-black text-black dark:text-white`}
+        >
           <ClerkProvider>
             <Header />
             <main className="flex-1">{children}</main>
-          </ClerkProvider>{" "}
-        </ThemeProvider>
-      </body>
-    </html>
+          </ClerkProvider>
+        </body>
+      </html>
+    </ThemeProvider>
   );
 }
