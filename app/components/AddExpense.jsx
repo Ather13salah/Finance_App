@@ -1,9 +1,13 @@
+"use client";
 import { useState } from "react";
-import { X } from "lucide-react";
 import BaseAlertDialog from "./BaseAlertDialog";
+import ErrorAlert from "./ErrorAlert";
+import useFinance from "./helper_hooks/useFinance";
 function AddExpense({ setOpen, open }) {
-  const [error, setError] = useState("");
-
+  const [expenseAmount, setExpenseAmount] = useState("");
+  const [expenseCategory, setExpenseCategory] = useState("");
+  const { updateFinanceData, expenseError } = useFinance();
+  const inputStyle = `border p-2 rounded`;
   return (
     <BaseAlertDialog
       open={open}
@@ -11,7 +15,35 @@ function AddExpense({ setOpen, open }) {
       title="Add Expense"
       description=" Please enter your expense details below"
     >
-      <input placeholder="Add Expense"></input>
+      {expenseError && (
+        <ErrorAlert errorMessage={expenseError} isExpense={true} />
+      )}
+      <input
+        placeholder="Enter Expense amount"
+        type="text"
+        className={inputStyle}
+        value={expenseAmount}
+        onChange={(e) => setExpenseAmount(e.target.value)}
+      />
+      <input
+        placeholder="Enter Expense's Category"
+        type="text"
+        className={inputStyle}
+        value={expenseCategory}
+        onChange={(e) => setExpenseCategory(e.target.value)}
+      />
+      <button
+        onClick={() => {
+          const expense = updateFinanceData({
+            amount: expenseAmount,
+            category: expenseCategory,
+          });
+          if (expense) setOpen(false);
+        }}
+        className="rounded-xl flex justify-center  hover:cursor-pointer hover:bg-black hover:text-white   hover:dark:bg-white hover:dark:text-black mt-4 p-2 duration-500"
+      >
+        Add Expense
+      </button>
     </BaseAlertDialog>
   );
 }

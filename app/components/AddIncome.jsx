@@ -1,22 +1,23 @@
+'use client'
 import BaseAlertDialog from "./BaseAlertDialog";
 import { useState } from "react";
-import { saveTheIncome } from "./manage_income";
 import ErrorAlert from "./ErrorAlert";
-
+import useFinance from "./helper_hooks/useFinance";
 function AddIncome({ setIsOpen, isOpen }) {
   // this component allows user to add income details
-  const [error, setError] = useState("");
+
   const [income, setIncome] = useState("");
-  const saveIncome = (amount) => {
+  const { saveTheIncome ,error,setError } = useFinance();
+  const saveIncome = () => {
     // Function to save income details
-    if (!amount || isNaN(amount)) {
+    if (!income || isNaN(income)) {
       setError("Please enter a valid number");
       return;
     }
     // Save income logic here
-    saveTheIncome(amount);
-    setIsOpen(false);
-  };
+    const savedIncome = saveTheIncome(Number(income));
+    if(savedIncome) setIsOpen(false);
+  }; 
   return (
     <BaseAlertDialog
       title="Add Income"
@@ -24,7 +25,7 @@ function AddIncome({ setIsOpen, isOpen }) {
       open={isOpen}
       onOpenChange={setIsOpen}
     >
-      {error && <ErrorAlert errorMessage={error} />}
+      {error && <ErrorAlert errorMessage={error} setError={setError}/>}
       <input
         type="text"
         placeholder="Enter income amount"
@@ -33,7 +34,7 @@ function AddIncome({ setIsOpen, isOpen }) {
         onChange={(e) => setIncome(e.target.value)}
       />
       <button
-        onClick={() => saveIncome(income)}
+        onClick={saveIncome}
         className="rounded-xl flex justify-center  hover:cursor-pointer hover:bg-black hover:text-white   hover:dark:bg-white hover:dark:text-black mt-4 p-2 duration-500"
       >
         Save

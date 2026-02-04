@@ -3,6 +3,9 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "./components/Header";
 import ThemeProvider from "./components/ThemeProvider";
+import FinanceProvider from "./contexts/FinanceContex";
+import AddExpense from "./components/AddExpense";
+import AddIncome from "./components/AddIncome";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -20,17 +23,22 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} transition-color duration-500 flex flex-col min-h-screen antialiased bg-white dark:bg-black text-black dark:text-white`}
-        >
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} transition-color duration-500 flex flex-col min-h-screen antialiased bg-white dark:bg-black text-black dark:text-white`}
+      >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ClerkProvider>
-            <Header />
-            <main className="flex-1">{children}</main>
+            <FinanceProvider>
+              {" "}
+              <Header />
+              <main className="flex-1">{children}</main>
+              <AddExpense/>
+              <AddIncome/>
+            </FinanceProvider>
           </ClerkProvider>
-        </body>
-      </html>
-    </ThemeProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }
