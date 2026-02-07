@@ -7,11 +7,11 @@ function AddIncome({ setIsOpen, isOpen }) {
   // this component allows user to add income details
 
   const [income, setIncome] = useState("");
-  const { saveTheIncome ,error,setError } = useFinance();
+  const { saveTheIncome ,incomeError,setIncomeError } = useFinance();
   const saveIncome = () => {
     // Function to save income details
     if (!income || isNaN(income)) {
-      setError("Please enter a valid number");
+      setIncomeError("Please enter a valid number");
       return;
     }
     // Save income logic here
@@ -25,7 +25,7 @@ function AddIncome({ setIsOpen, isOpen }) {
       open={isOpen}
       onOpenChange={setIsOpen}
     >
-      {error && <ErrorAlert errorMessage={error} setError={setError}/>}
+      {incomeError && <ErrorAlert errorMessage={incomeError} setError={setIncomeError}/>}
       <input
         type="text"
         placeholder="Enter income amount"

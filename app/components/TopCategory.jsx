@@ -11,7 +11,14 @@ function TopCategory({ expenses }) {
       <div className="text-2xl font-bold">
         {/* Replace with dynamic category data */}
         <div>{topCategory?.category}</div>
-        <p className="text-xl font-semibold">${topCategory?.amount}</p>
+        {expenses ? (
+          <>
+            <p className="text-xl font-semibold">${topCategory?.amount}</p>
+            <p className="text-lg font-semibold">{topCategory?.date}</p>
+          </>
+        ) : (
+          <div className="text-xl font-semibold"> No Top Category</div>
+        )}
       </div>
     </div>
   );

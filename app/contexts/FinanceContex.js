@@ -6,6 +6,7 @@ function FinanceProvider({ children }) {
   const [financeData, setFinanceData] = useState({});
   const [error, setError] = useState("");
   const [expenseError, setExpenseError] = useState("");
+  const [incomeError, setIncomeError] = useState("");
   useEffect(() => {
     const { error, income, balance, expenses, totalExpenses } = getTheIncome();
     error
@@ -23,6 +24,7 @@ function FinanceProvider({ children }) {
       };
       setFinanceData(financeData);
       localStorage.setItem("finance", JSON.stringify(financeData));
+      setIncomeError("")
       return true;
     } catch (e) {
       return { data: null, error: "Failed to save income data." };
@@ -96,6 +98,8 @@ function FinanceProvider({ children }) {
         setError,
         expenseError,
         setExpenseError,
+        incomeError,
+        setIncomeError,
         saveTheIncome,
         updateFinanceData,
       }}

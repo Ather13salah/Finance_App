@@ -17,6 +17,7 @@ export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const { financeData, error } = useFinance();
   const { balance, incomeAmount, monthlyExpenses, percentageSpent } = useFinanceCalculator(financeData);
+ 
   return (
     <div className=" h-full  flex justify-between flex-row  ">
       <div className="p-4">
